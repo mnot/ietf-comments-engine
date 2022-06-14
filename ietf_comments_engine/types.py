@@ -7,6 +7,7 @@ class Ui:
     """
     Abstract class for a UI.
     """
+
     def status(self, name: str, value: str) -> None:
         """Informational statement."""
         pass
@@ -16,7 +17,7 @@ class Ui:
         pass
 
     def error(self, message: str, source: str = "") -> None:
-        """Error """
+        """Error"""
         pass
 
     def comment(self, comment: CommentType) -> None:
