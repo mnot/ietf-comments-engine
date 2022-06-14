@@ -4,21 +4,21 @@ CommentType = Tuple[str, str]
 
 
 class Ui:
-    @classmethod
-    def out(cls, content: str) -> None:
+    """
+    Abstract class for a UI.
+    """
+    def status(self, name: str, value: str) -> None:
+        """Informational statement."""
         pass
 
-    @classmethod
-    def status(cls, name: str, value: str) -> None:
+    def warn(self, message: str, source: str = "") -> None:
+        """Warning."""
         pass
 
-    @classmethod
-    def warn(cls, message: str, source: str = "") -> None:
-        pass
-
-    @classmethod
-    def error(cls, message: str, source: str = "") -> None:
+    def error(self, message: str, source: str = "") -> None:
+        """Error """
         pass
 
     def comment(self, comment: CommentType) -> None:
+        """The content of a review comment."""
         pass
