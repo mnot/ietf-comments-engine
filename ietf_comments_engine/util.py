@@ -6,7 +6,7 @@ except ImportError:
     pass
 
 
-class Response:
+class Response:  # pylint: disable=too-few-public-methods
     def __init__(self, fetch_response: object) -> None:
         self.status_code = int(fetch_response.status)  # type: ignore[attr-defined]
         self.text = str(StringIO(fetch_response.response))  # type: ignore[attr-defined]

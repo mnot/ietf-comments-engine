@@ -1,4 +1,4 @@
-from typing import Dict, List, Any, Optional, IO
+from typing import Dict, List, Any, Optional
 
 import commonmark  # type: ignore[import]
 from commonmark.node import Node  # type: ignore[import]
@@ -35,7 +35,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
     def document(self, node: Node, entering: bool) -> None:
         if not entering:
             self.cleanup()
-            if sum([len(l) for l in self.issues.values()]) == 0:
+            if sum(len(l) for l in self.issues.values()) == 0:
                 self.ui.warn("Did not find any issues.")
 
     def softbreak(self, node: Node, entering: bool = None) -> None:
