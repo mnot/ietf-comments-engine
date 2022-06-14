@@ -164,9 +164,9 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
                     break
 
 
-def parse_markdown_comments(fd: IO, ui: Ui) -> CommentRenderer:
+def parse_markdown_comments(instr: str, ui: Ui) -> CommentRenderer:
     parser = commonmark.Parser()
-    doc = parser.parse(fd.read())
+    doc = parser.parse(instr)
     renderer = CommentRenderer(ui)
     renderer.render(doc)
     return renderer
