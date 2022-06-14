@@ -1,5 +1,11 @@
 PROJECT=ietf_comments_engine
 
+#############################################################################
+## Tests
+
+.PHONY: test
+test: venv
+	echo "Write some tests please."
 
 
 #############################################################################
@@ -41,7 +47,7 @@ build: clean venv
 	$(VENV)/python -m build
 
 .PHONY: upload
-upload: build test version venv
+upload: build test typecheck version venv
 	git tag $(PROJECT)-$(VERSION)
 	git push
 	git push --tags origin
