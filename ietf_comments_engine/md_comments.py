@@ -1,7 +1,7 @@
 from typing import Dict, List, Any, Optional
 
-import commonmark  # type: ignore[import]
-from commonmark.node import Node  # type: ignore[import]
+import commonmark
+from commonmark.node import Node
 
 
 from .changes import DocChanges
@@ -166,7 +166,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
 
 def parse_markdown_comments(instr: str, ui: Ui) -> CommentRenderer:
     parser = commonmark.Parser()
-    doc = parser.parse(instr)
+    doc = parser.parse(instr)  # type: ignore[no-untyped-call]
     renderer = CommentRenderer(ui)
-    renderer.render(doc)
+    renderer.render(doc)  # type: ignore[no-untyped-call]
     return renderer
