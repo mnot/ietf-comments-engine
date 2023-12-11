@@ -12,7 +12,7 @@ from .util import get
 def parse_xml_comments(rfc: str, ui: Ui) -> List[CommentType]:
     parser = xml.sax.make_parser()
     handler = XmlCommentHandler()
-    parser.setProperty(  # type: ignore[no-untyped-call]
+    parser.setProperty(
         "http://xml.org/sax/properties/lexical-handler", handler
     )
     if not os.path.isfile(rfc):

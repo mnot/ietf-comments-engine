@@ -1,7 +1,7 @@
 from io import StringIO
 
 try:
-    from js import XMLHttpRequest  # type: ignore[import]
+    from js import XMLHttpRequest  # type: ignore[import-not-found]
 except ImportError:
     pass
 
