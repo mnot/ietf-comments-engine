@@ -13,18 +13,18 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
     section_map = {"discusses": "discuss", "comments": "comment", "nits": "nit"}
     BLOCK = "block"
 
-    def __init__(self, ui: Ui, options: Dict[str, Any] = None) -> None:
+    def __init__(self, ui: Ui, options: Optional[Dict[str, Any]] = None) -> None:
         self.ui = ui
         self.options = options
         self._buffer: List[str] = []
-        self._section: str = None
-        self._current_issue: str = None
-        self._context: str = None
+        self._section: Optional[str] = None
+        self._current_issue: Optional[str] = None
+        self._context: Optional[str] = None
         self._context_buffer: List[str] = []
-        self.title: str = None
-        self.doc: str = None
-        self.revision: str = None
-        self.cc: str = None
+        self.title: Optional[str] = None
+        self.doc: Optional[str] = None
+        self.revision: Optional[str] = None
+        self.cc: Optional[str] = None
         self.changes: Optional[DocChanges] = None
         self.issues: Dict[str, List[CommentType]] = {
             "discuss": [],
@@ -38,7 +38,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
             if sum(len(l) for l in self.issues.values()) == 0:
                 self.ui.warn("Did not find any issues.")
 
-    def softbreak(self, node: Node, entering: bool = None) -> None:
+    def softbreak(self, node: Node, entering: bool) -> None:
         self._buffer.append(" ")
         if self._context_buffer:
             self._context_buffer.append(" ")
@@ -46,7 +46,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
     def linebreak(self, node: Node, entering: bool) -> None:
         self._buffer.append("\n\n")
 
-    def text(self, node: Node, entering: bool = None) -> None:
+    def text(self, node: Node, entering: bool) -> None:
         self._buffer.append(node.literal)
         if self._context is not None:
             self._context_buffer.append(node.literal)
@@ -87,9 +87,6 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
             content = "".join(self._context_buffer).strip()
             if content:
                 self._context_buffer = []
-                change_location = self.changes.find_change_line(content)
-                if change_location is None:
-                    self.ui.warn(f"Can't find quoted text in document: {content}")
 
     def heading(self, node: Node, entering: bool) -> None:
         if node.level < 4:
@@ -118,6 +115,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
             self.ui.error(
                 "h1 header doesn't contain draft name (starting with 'draft-')."
             )
+            return
         segments = docname.split("-")
         self.doc = "-".join(segments[:-1])
         revision = segments[-1]
@@ -125,6 +123,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
             self.revision = revision
         else:
             self.ui.error("h1 header draft name doesn't include revision")
+            return
         self.changes = DocChanges(self.doc, self.revision, self.ui)
 
     def handle_h2(self, content: str) -> None:

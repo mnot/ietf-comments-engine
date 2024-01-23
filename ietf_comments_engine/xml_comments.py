@@ -21,7 +21,7 @@ def parse_xml_comments(rfc: str, ui: Ui) -> List[CommentType]:
     return handler.comments
 
 
-class XmlCommentHandler(xml.sax.handler.LexicalHandler):  # type: ignore[name-defined]
+class XmlCommentHandler(xml.sax.handler.LexicalHandler):
     source_regex = re.compile(
         r"^\s*\[\s*([a-zA-z0-9\-]+)\s*\]\s*(.+)", flags=re.MULTILINE | re.DOTALL
     )
