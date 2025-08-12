@@ -15,9 +15,9 @@ def parse_xml_comments(rfc: str, ui: Ui) -> List[CommentType]:
     parser.setProperty("http://xml.org/sax/properties/lexical-handler", handler)
     if not os.path.isfile(rfc):
         rfcxml = fetch_rfcxml(rfc, ui)
-        parser.parse(StringIO(rfcxml))  # type: ignore[no-untyped-call]
+        parser.parse(StringIO(rfcxml))
     else:
-        parser.parse(rfc)  # type: ignore[no-untyped-call]
+        parser.parse(rfc)
     return handler.comments
 
 

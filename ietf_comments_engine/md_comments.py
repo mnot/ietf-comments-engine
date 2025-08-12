@@ -47,6 +47,8 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
         self._buffer.append("\n\n")
 
     def text(self, node: Node, entering: bool) -> None:
+        if node.literal is None:
+            return
         self._buffer.append(node.literal)
         if self._context is not None:
             self._context_buffer.append(node.literal)
@@ -58,7 +60,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
         self._buffer.append("**")
 
     def paragraph(self, node: Node, entering: bool) -> None:
-        if not entering and node.parent.t != "item":
+        if not entering and node.parent and node.parent.t != "item":
             self._buffer.append("\n\n")
 
     def link(self, node: Node, entering: bool) -> None:
@@ -89,6 +91,8 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
                 self._context_buffer = []
 
     def heading(self, node: Node, entering: bool) -> None:
+        if node.level is None:
+            return
         if node.level < 4:
             if entering:
                 self.cleanup()
@@ -165,7 +169,7 @@ class CommentRenderer(commonmark.render.renderer.Renderer):
 
 def parse_markdown_comments(instr: str, ui: Ui) -> CommentRenderer:
     parser = commonmark.Parser()
-    doc = parser.parse(instr)  # type: ignore[no-untyped-call]
+    doc = parser.parse(instr)
     renderer = CommentRenderer(ui)
-    renderer.render(doc)  # type: ignore[no-untyped-call]
+    renderer.render(doc)
     return renderer
