@@ -64,7 +64,7 @@ class XmlCommentHandler(xml.sax.handler.LexicalHandler):
         return adjusted
 
     @classmethod
-    def blockquote_indent(cls, match: re.Match) -> str:
+    def blockquote_indent(cls, match: re.Match[str]) -> str:
         indented = textwrap.indent(match.group(2), "    ", lambda line: True)
         return f"{match.group(1)}:\n\n{indented}{match.group(3)}"
 

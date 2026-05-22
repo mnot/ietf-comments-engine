@@ -2,13 +2,14 @@ from typing import Dict, List, Any, Optional
 
 import commonmark
 from commonmark.node import Node
+from commonmark.render.renderer import Renderer
 
 
 from .changes import DocChanges
 from .types import CommentType, Ui
 
 
-class CommentRenderer(commonmark.render.renderer.Renderer):
+class CommentRenderer(Renderer):
     sections = ["discuss", "comment", "nit"]
     section_map = {"discusses": "discuss", "comments": "comment", "nits": "nit"}
     BLOCK = "block"
